@@ -101,4 +101,5 @@ ENV/
 # Pycharm 
 .idea/
 
-
+# Credentials
+config.txt

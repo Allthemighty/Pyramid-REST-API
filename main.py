@@ -1,12 +1,10 @@
-import json
-
 from pyramid.config import Configurator
 from pyramid.response import Response
 from pyramid.view import *
 from waitress import serve
 
 
-@view_config(route_name=home)
+@view_config(route_name='home')
 def home(request):
     return Response('This is Michael\'s REST API!')
 
