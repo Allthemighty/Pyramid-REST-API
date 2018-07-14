@@ -18,7 +18,7 @@ def get_users(request):
     return Response(str(users))
 
 
-@view_defaults(renderer='json', route_name='user')
+@view_defaults(renderer='json', route_name='user1')
 class UserView(object):
     """Handles all requests on the /user endpoint."""
 
@@ -28,14 +28,17 @@ class UserView(object):
     @view_config(request_method='GET')
     def get(self):
         """Handles the request to retrieve an user by email."""
-        response = self.request.matchdict['email']
-        user = User.get_user(response)
+        email = self.request.matchdict['email']
+        user = User.get_user(email)
         return Response(str(user))
 
-    @view_config(request_method='POST')
+    @view_config(request_method='POST', route_name='user2')
     def post(self):
         """Handles the request to post an user to the database by email and name."""
-        return Response('post')
+        request_body = self.request.json_body
+        user = User(request_body['email'], request_body['name'])
+        response = user.post_user()
+        return Response(response)
 
     @view_config(request_method='PUT')
     def put(self):
@@ -52,7 +55,8 @@ if __name__ == '__main__':
     config = Configurator()
     config.add_route('home', '/')
     config.add_route('users', '/users')
-    config.add_route('user', '/user/{email}')
+    config.add_route('user1', '/user/{email}')
+    config.add_route('user2', '/user')
     config.scan()
     app = config.make_wsgi_app()
 serve(app, host='0.0.0.0', port=1212)
