@@ -7,36 +7,44 @@ from waitress import serve
 
 @view_config(route_name='home')
 def home(request):
+    """Handle the default request, for when no endpoint is specified."""
     return Response('This is Michael\'s REST API!')
 
 
 @view_config(renderer='json', route_name='users')
-def getUsers(request):
-    users = User.getUsers()
+def get_users(request):
+    """Handle the request to retrieve users."""
+    users = User.get_users()
     return Response(str(users))
 
 
 @view_defaults(renderer='json', route_name='user')
-class Userview(object):
+class UserView(object):
+    """Handles all requests on the /user endpoint."""
+
     def __init__(self, request):
         self.request = request
 
     @view_config(request_method='GET')
     def get(self):
+        """Handles the request to retrieve an user by email."""
         response = self.request.matchdict['email']
-        user = User.getUser(response)
+        user = User.get_user(response)
         return Response(str(user))
 
     @view_config(request_method='POST')
     def post(self):
+        """Handles the request to post an user to the database by email and name."""
         return Response('post')
 
     @view_config(request_method='PUT')
     def put(self):
+        """Handles the request to edit an users data."""
         return Response('put')
 
     @view_config(request_method='DELETE')
     def delete(self):
+        """Handles the request to delete an user from the database."""
         return Response('delete')
 
 

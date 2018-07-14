@@ -18,19 +18,22 @@ class User(Base):
         self.email = email
         self.name = name
 
-    def getUsers():
-        userlist = Session().query(User).all()
-        userdict = {}
-        for u in userlist:
+    @staticmethod
+    def get_users():
+        """Retrieve all users in the database."""
+        user_list = Session().query(User).all()
+        user_dict = {}
+        for u in user_list:
             user = {'email': u.email, 'name': u.name}
-            userdict[u.id] = user
-        json.dumps(userdict)
-        return userdict
+            user_dict[str(u.id)] = user
+        json.dumps(user_dict)
+        return user_dict
 
-    def getUser(self):
+    def get_user(self):
+        """Retrieve an individual user from the database."""
         user = Session().query(User).filter_by(email=self).first()
         if user is None:
             return 'There\'s no such user in our database.'
-        userdict = {'id': user.id, 'email': user.email, 'name': user.name}
-        json.dumps(userdict)
-        return userdict
+        user_dict = {'id': str(user.id), 'email': user.email, 'name': user.name}
+        json.dumps(user_dict)
+        return user_dict
