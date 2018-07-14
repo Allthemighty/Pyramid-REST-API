@@ -13,7 +13,7 @@ def home(request):
 
 @view_config(renderer='json', route_name='users')
 def get_users(request):
-    """Handle the request to retrieve users."""
+    """Handle the request to retrieve all users."""
     users = User.get_users()
     return Response(str(users))
 
@@ -48,7 +48,9 @@ class UserView(object):
     @view_config(request_method='DELETE')
     def delete(self):
         """Handles the request to delete an user from the database."""
-        return Response('delete')
+        email = self.request.matchdict['email']
+        response = User.delete_user(email)
+        return Response(response)
 
 
 if __name__ == '__main__':

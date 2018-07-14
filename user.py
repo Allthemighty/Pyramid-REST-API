@@ -2,6 +2,8 @@ import json
 
 from dbconn import *
 
+session = Session()
+
 
 class User(Base):
     __tablename__ = 'users'
@@ -21,7 +23,7 @@ class User(Base):
     @staticmethod
     def get_users():
         """Retrieve all users in the database."""
-        user_list = Session().query(User).all()
+        user_list = session.query(User).all()
         user_dict = {}
         for u in user_list:
             user = {'email': u.email, 'name': u.name}
@@ -31,7 +33,7 @@ class User(Base):
 
     def get_user(self):
         """Retrieve an individual user from the database."""
-        user = Session().query(User).filter_by(email=self).first()
+        user = session.query(User).filter_by(email=self).first()
         if user is None:
             return 'There\'s no such user in our database.'
         user_dict = {'id': str(user.id), 'email': user.email, 'name': user.name}
@@ -39,11 +41,21 @@ class User(Base):
         return user_dict
 
     def post_user(self):
+        """Post an user to the database."""
         user_table = User.users
         if isinstance(self, User):
-            previous_id = Session().query(User.id).order_by(User.id.desc()).first()
+            previous_id = session.query(User.id).order_by(User.id.desc()).first()
             ins = insert(user_table).values(id=previous_id[0] + 1, email=self.email, name=self.email)
             conn.execute(ins)
             return 'User has been successfully posted to the database.'
         else:
             return 'This is not a valid user.'
+
+    def delete_user(self):
+        """Deletes an user from the database."""
+        user = session.query(User).filter_by(email=self).first()
+        if user is None:
+            return 'There\'s no such user in our database.'
+        session.delete(user)
+        session.commit()
+        return 'User has been successfully deleted from the database.'
