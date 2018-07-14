@@ -6,13 +6,13 @@ from pyramid.view import *
 from waitress import serve
 
 
-def hello_world(request):
-    print('Incoming request')
+@view_config(route_name=home)
+def home(request):
     return Response('This is Michael\'s REST API!')
 
 
 @view_defaults(renderer='json', route_name='user')
-class USERView(object):
+class Userview(object):
     def __init__(self, request):
         self.request = request
 
@@ -35,8 +35,7 @@ class USERView(object):
 
 if __name__ == '__main__':
     config = Configurator()
-    config.add_route('hello', '/')
-    config.add_view(hello_world, route_name='hello')
+    config.add_route('home', '/')
     config.add_route('user', '/user')
     config.scan()
     app = config.make_wsgi_app()
