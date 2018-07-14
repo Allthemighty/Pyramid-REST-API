@@ -3,16 +3,15 @@ import os
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, 'README.txt')) as f:
+with open(os.path.join(here, 'README.md')) as f:
     README = f.read()
-with open(os.path.join(here, 'CHANGES.txt')) as f:
-    CHANGES = f.read()
 
 requires = [
     'pyramid',
-    'pyramid_jinja2',
     'pyramid_debugtoolbar',
     'waitress',
+    'psycopg2',
+    'SQLAlchemy'
     ]
 
 tests_require = [
@@ -21,18 +20,22 @@ tests_require = [
     'pytest-cov',
     ]
 
-setup(name='pyr',
+setup(name='Pyramid-REST-API',
       version='0.0',
       description='pyr',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
+          "Natural Language :: English",
+          "Intended Audience :: Developers",
           "Programming Language :: Python",
           "Framework :: Pyramid",
           "Topic :: Internet :: WWW/HTTP",
-          "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+          "Topic :: Internet :: WWW/HTTP :: WSGI",
+          "Topic :: Software Development :: Version Control :: Git",
+          "License :: OSI Approved :: MIT License",
       ],
-      author='',
-      author_email='',
+      author='Michael Verdegaal',
+      author_email='michaelverdegaal@hotmail.nl',
       url='',
       keywords='web pyramid pylons',
       packages=find_packages(),
