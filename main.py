@@ -23,7 +23,9 @@ class Userview(object):
 
     @view_config(request_method='GET')
     def get(self):
-        return Response('get')
+        response = self.request.matchdict['email']
+        user = User.getUser(response)
+        return Response(str(user))
 
     @view_config(request_method='POST')
     def post(self):
@@ -42,7 +44,7 @@ if __name__ == '__main__':
     config = Configurator()
     config.add_route('home', '/')
     config.add_route('users', '/users')
-    config.add_route('user', '/user')
+    config.add_route('user', '/user/{email}')
     config.scan()
     app = config.make_wsgi_app()
 serve(app, host='0.0.0.0', port=1212)
