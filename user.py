@@ -5,10 +5,13 @@ from dbconn import *
 
 class User(Base):
     __tablename__ = 'users'
+    metadata = MetaData()
 
-    id = Column('id', Integer, primary_key=True)
-    email = Column('email', String)
-    name = Column('name', String)
+    users = Table(__tablename__, metadata,
+                  Column('id', Integer, primary_key=True),
+                  Column('email', String),
+                  Column('name', String),
+                  )
 
     def __init__(self, email, name, id='Undefined'):
         self.id = id
@@ -16,10 +19,10 @@ class User(Base):
         self.name = name
 
     def getUsers():
-        users = Session().query(User).all()
-        userlist = {}
-        for u in users:
+        userlist = Session().query(User).all()
+        userdict = {}
+        for u in userlist:
             user = {'email': u.email, 'name': u.name}
-            userlist[u.id] = user
-        json.dumps(userlist)
-        return userlist
+            userdict[u.id] = user
+        json.dumps(userdict)
+        return userdict
