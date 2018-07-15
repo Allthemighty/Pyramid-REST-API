@@ -20,17 +20,18 @@ Filling the database with dummy data in advance is optional.
 ### Installing
 
 * Clone the project from this repository into your desired directory.
-* Create a filled called "config.txt" in the same directory. This will be used to connect to your database. Fill in the content inside the {}:
+* Create a filled called "config.txt" in the project directory. This will be used to connect to your database. Fill in the content inside the {}:
 ```
 [configuration]
 password = postgresql://postgres:{postgres password}@localhost:{port number}/{database name}
 ```
-Install the required packages if asked for. A requirement.txt file has been provided, but in case this doesn't work, install these packages via pip:
-* pyramid
-* SQLAlchemy
-* psycopg2
 
-If you can't get this to work either, [here's the full project with packages installed](https://drive.google.com/file/d/1v77p2Mi1Swzhvldsh86mwkQCBHg47ndX/view?usp=sharing).
+Create and activate a new virtual enviroment in the project directory. See [here](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/) if this is not clear how.
+
+Now install the required packages. A requirement.txt file has been provided, example:
+```
+pip install -r requirements.txt
+```
 
 ## Running
 
