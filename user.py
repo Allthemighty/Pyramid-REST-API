@@ -45,7 +45,7 @@ class User(Base):
         user_table = User.users
         if isinstance(self, User):
             previous_id = session.query(User.id).order_by(User.id.desc()).first()
-            ins = insert(user_table).values(id=previous_id[0] + 1, email=self.email, name=self.email)
+            ins = insert(user_table).values(id=previous_id[0] + 1, email=self.email, name=self.name)
             conn.execute(ins)
             return 'User has been successfully posted to the database.'
         else:
@@ -59,3 +59,18 @@ class User(Base):
         session.delete(user)
         session.commit()
         return 'User has been successfully deleted from the database.'
+
+    def edit_user(self, request_body):
+        """Edit an user from the database."""
+        response_string = ''
+        user = session.query(User).filter_by(email=self).first()
+        if user is None:
+            return 'There\'s no such user in our database.'
+        if 'email' in request_body:
+            response_string += 'Email of user successfully edited.\n'
+            user.email = request_body['email']
+        if 'name' in request_body:
+            response_string += 'Name of user successfully edited.\n'
+            user.name = request_body['name']
+        session.commit()
+        return response_string

@@ -40,10 +40,13 @@ class UserView(object):
         response = user.post_user()
         return Response(response)
 
-    @view_config(request_method='PUT')
+    @view_config(request_method='PATCH')
     def put(self):
         """Handles the request to edit an users data."""
-        return Response('put')
+        email = self.request.matchdict['email']
+        request_body = self.request.json_body
+        response = User.edit_user(email, request_body)
+        return Response(response)
 
     @view_config(request_method='DELETE')
     def delete(self):

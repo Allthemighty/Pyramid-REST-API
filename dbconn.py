@@ -6,7 +6,7 @@ import configparser
 config = configparser.ConfigParser()
 config.read("config.txt")
 login_string = config.get("configuration", "password")
-engine = create_engine(login_string, echo=True)
+engine = create_engine(login_string, echo=False)
 conn = engine.connect()
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
