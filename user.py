@@ -1,6 +1,7 @@
 import json
 
 from dbconn import *
+import uuid
 
 session = Session()
 
@@ -44,8 +45,8 @@ class User(Base):
         """Post an user to the database."""
         user_table = User.users
         if isinstance(self, User):
-            previous_id = session.query(User.id).order_by(User.id.desc()).first()
-            ins = insert(user_table).values(id=previous_id[0] + 1, email=self.email, name=self.name)
+            user_id = uuid.uuid4()
+            ins = insert(user_table).values(id=user_id, email=self.email, name=self.name)
             conn.execute(ins)
             return 'User has been successfully posted to the database.'
         else:
