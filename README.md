@@ -25,10 +25,12 @@ Filling the database with dummy data in advance is optional.
 [configuration]
 password = postgresql://postgres:{postgres password}@localhost:{port number}/{database name}
 ```
-Install the required packages if asked for. An setup.py files has been provided, but in case this doesn't work, these packages are required (install via pip then for example):
+Install the required packages if asked for. A requirement.txt file has been provided, but in case this doesn't work, install these packages via pip:
 * pyramid
 * SQLAlchemy
 * psycopg2
+
+If you can't get this to work either, [here's the full project with packages installed](https://drive.google.com/file/d/1v77p2Mi1Swzhvldsh86mwkQCBHg47ndX/view?usp=sharing).
 
 ## Running
 
