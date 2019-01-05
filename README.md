@@ -1,6 +1,6 @@
-*UPDATE: This is a fairly old project, and this doesn't reflect how i would make one now. You can look at it, but just know it's not exactly a good example.*
+## Pyramid-REST-API
 
-Pyramid-REST-API
+**UPDATE: This is a fairly old project, and this doesn't reflect how i would make an api now. You can look at it, but just know it's not exactly a good example.**
 
 This is a simple REST-API to manage users in a database.
 
